@@ -5,12 +5,12 @@
 
 class Platform
 {
-	friend class Collision; //Collision class¿¡ private º¯¼ö(width, center height)»ç¿ë ±ÇÇÑ ºÎ¿©
+	friend class Collision; //Collision classì— private ë³€ìˆ˜(width, center height)ì‚¬ìš© ê¶Œí•œ ë¶€ì—¬
 public:
 	enum PLATFORM_TYPE { ISPASSABLE, IMPASSABLE };
 
 	Platform(float x, float y, float z, float w, float h, PLATFORM_TYPE platformtype);
-	//Platform(const Platform& Plat); //Copy constructor, vector »ı¼ºÇÒ¶§ ÇÊ¿ä
+	//Platform(const Platform& Plat); //Copy constructor, vector ìƒì„±í• ë•Œ í•„ìš”
 
 	void draw() const;
 
