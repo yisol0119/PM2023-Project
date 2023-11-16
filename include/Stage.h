@@ -27,7 +27,7 @@ public:
 	int getEnemysize() const;
 
 	void setplayermove(bool bPressLeft, bool bPressRight, bool bPressUp, bool bPressSpace);
-	void move(); //enemy, Bubble ¿òÁ÷ÀÓ
+	void move(); //enemy, Bubble Â¿Ã²ÃÃ·Ã€Ã“
 	
 	void draw();
 	
