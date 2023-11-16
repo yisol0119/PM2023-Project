@@ -2,14 +2,15 @@
 #include "Texture.h"
 class Wall
 {
+	friend class Collision; //Collision class에 private 변수(width, center height)사용 권한 부여
+
 public:
-	Wall(float x, float y, float z, float w, float h, bool impassable);
+	Wall(float x, float y, float z, float w, float h);
 	
 	void draw() const;
 	void setTexture(const Texture& texture);
 	
-	float getleftBoundary() const;
-	float getrightBoundary() const;
+
 
 private:
 	float center[3];
@@ -17,7 +18,6 @@ private:
 	float width, height;
 	
 	Texture wall_texture;
-	bool impassable;
 	float boundary[2];
 
 };

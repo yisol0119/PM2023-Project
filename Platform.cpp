@@ -1,18 +1,15 @@
 #include "Platform.h"
+#include "Collision.h"
 #include <GL/freeglut.h>
 
 
-Platform::Platform(float x, float y, float z, float w, float h) {
+Platform::Platform(float x, float y, float z, float w, float h, PLATFORM_TYPE platformType) {
 	center[0] = x;
 	center[1] = y;
 	center[2] = z;
 	width = w;
 	height = h;
-	platformtype = ISPASSABLE;
-	boundary[0] = center[1] + height / 2;		//╩С
-	boundary[1] = center[1] - height / 2;		//го
-	boundary[2] = center[0] - width / 2;		//аб
-	boundary[3] = center[0] + width / 2;		//©Л
+	platformtype = platformType;
 	
 	
 	
@@ -29,13 +26,24 @@ void Platform::draw() const {
 	//glMaterialfv(GL_FRONT, GL_DIFFUSE, mtl.getDiffuse());
 	//glMaterialfv(GL_FRONT, GL_SPECULAR, mtl.getSpecular());
 	//glMaterialfv(GL_FRONT, GL_SHININESS, mtl.getShininess());
-	glBegin(GL_POLYGON);
-	glColor3f(0.5f, 0.0f, 0.5f);
-	glVertex3f(-width / 2, height / 2, 0.0f); // { Front }
-	glVertex3f(width / 2, height / 2, 0.0f); // { Front }
-	glVertex3f(width / 2, -height / 2, 0.0f); // { Front }
-	glVertex3f(-width / 2, -height / 2, 0.0f); // { Front }
-	glEnd();
+	if (platformtype == ISPASSABLE) {
+		glBegin(GL_POLYGON);
+		glColor3f(0.1f, 0.3f, 0.2f);
+		glVertex3f(-width / 2, height / 2, 0.0f); // { Front }
+		glVertex3f(width / 2, height / 2, 0.0f); // { Front }
+		glVertex3f(width / 2, -height / 2, 0.0f); // { Front }
+		glVertex3f(-width / 2, -height / 2, 0.0f); // { Front }
+		glEnd();
+	}
+	else {
+		glBegin(GL_POLYGON);
+		glColor3f(0.5f, 0.0f, 0.5f);
+		glVertex3f(-width / 2, height / 2, 0.0f); // { Front }
+		glVertex3f(width / 2, height / 2, 0.0f); // { Front }
+		glVertex3f(width / 2, -height / 2, 0.0f); // { Front }
+		glVertex3f(-width / 2, -height / 2, 0.0f); // { Front }
+		glEnd();
+	}
 	glPopMatrix();
 
 }
@@ -53,11 +61,11 @@ const float Platform::getHeight() const {
 	return height;
 }
 
-void Platform::setColliding(bool collide) {
+void Platform::setColliding(Collision::COLLISION_TYPE collide) {
 	colliding = collide;
 
 }
-const bool Platform::getColliding() const {
+const Collision::COLLISION_TYPE Platform::getColliding() const {
 	return colliding;
 
 }

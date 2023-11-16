@@ -13,21 +13,24 @@ Player::Player(float x, float y, float z, float s) {
 	velocity[1] = 0.0f;
 
 	face = FACE::RIGHT;
-	horizontalState = HORIZONTAL_STATE::HSTOP;
-	verticalState = VERTICAL_STATE::VSTOP;
+	setHorizontalState(HSTOP);
+	setVerticalState(FALL);
+	
+	score = 0;
+	life = 3;
 
-	boundary[0] = center[1] + size / 2;		//상
-	boundary[1] = center[1] - size / 2;		//하
-	boundary[2] = center[0] - size / 2;		//좌
-	boundary[3] = center[0] + size / 2;		//우
+	inittexture();
+	printf("player constructure texture\n");
 }
 
-void Player::draw() const {
-	glPointSize(size);
-	glColor3f(1.0f, 1.0f, 0.0f);
-	glBegin(GL_POINTS);
-	glVertex2f(center[0], center[1]);
-	glEnd();
+
+
+void Player::draw() {
+	if (shield == TRUE && ((int)shield_timer % 2) == 0) return;    //shield가 활성화 되었을 때 player의 형상이 깜박거리도록 한다. 
+	if(face==LEFT)
+		texture.drawtexture(size, size, center);
+	else
+		texture.drawtexture(size, size, center,1);
 }
 
 void Player::setFace(FACE f) {
@@ -36,10 +39,46 @@ void Player::setFace(FACE f) {
 
 void Player::setHorizontalState(HORIZONTAL_STATE hs) {
 	horizontalState = hs;
+
+	switch (horizontalState)
+	{
+	case Player::HSTOP:
+		velocity[0] = 0.0f;
+		break;
+	case Player::MOVE:
+		switch (face)
+		{
+		case Player::LEFT:
+			velocity[0] = -5.0f;
+			break;
+		case Player::RIGHT:
+			velocity[0] = 5.0f;
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::setVerticalState(VERTICAL_STATE vs) {
 	verticalState = vs;
+	switch (verticalState)
+	{
+	case Player::VSTOP:
+		velocity[1] = 0.0f;
+		break;
+	case Player::JUMP:
+		velocity[1]=10.0f;
+		break;
+	case Player::FALL:
+		velocity[1] = -3.0f;
+		break;
+	default:
+		break;
+	}
 }
 
 Player::VERTICAL_STATE Player::getVerticalState() const {
@@ -67,48 +106,43 @@ const float Player::getSize() const {
 
 }
 
+const int Player::getScore() const {
+
+	return score;
+
+}
+const int Player::getLife() const {
+
+
+	return life;
+}
+
 void Player::move() {
-	
-	switch (horizontalState)
-	{
-	case Player::HSTOP:
-		velocity[0] = 0.0f;
-		break;
-	case Player::MOVE:
-		switch (face)
-		{
-		case Player::LEFT:
-			velocity[0] = -5.0f;
-			break;
-		case Player::RIGHT:
-			velocity[0] = 5.0f;
-			break;
-		default:
-			break;
-		}
-		break;
-	default:
-		break;
-	}
-	
-	switch (verticalState)
-	{
-	case Player::VSTOP:
-		velocity[1] = 0.0f;
-		break;
-	case Player::JUMP:
-		velocity[1] -= 2.0f;
+
+	/*if (bPressSpace && (bubbles.empty()||(bubbles.back()).getBubblestate() != Bubble::BLANK)) {
+
+		bubbles.push_back(player.shootBubble());
+		printf("pushback bubble\n");
+
+	}*/
+	// Bubble 개수를 제한하는 것으로 수정 
+
+
+	if (verticalState == JUMP) {
+		velocity[1] -= 0.4f;
 		if (velocity[1] <= 0) {
 			cout << "player fall" << endl;
-			verticalState = FALL;
+			setVerticalState(FALL);
 		}
-		break;
-	case Player::FALL:
-		velocity[1] = -5.0f;
-		break;
-	default:
-		break;
 	}
+	if(shield==TRUE) shield_timer += 0.3f;
+	if (shield_timer > 20.0f) {
+		shield_timer = 0;
+		shield = FALSE;
+
+	}
+
+	
 
 	center[0] += velocity[0];
 	center[1] += velocity[1];
@@ -126,6 +160,24 @@ void Player::setVelocityX(float vel) {
 void Player::setVelocityY(float vel) {
 	velocity[1] = vel;
 }
+
+
+void Player::inittexture() {
+
+	texture.initializeTexture("dragon_facingleft.png");
+}
+
+Bubble Player::shootBubble() {
+	Bubble newbubble(20.0f);
+
+	newbubble.setCenter(center[0], center[1], center[2]);
+	if(face==RIGHT)
+		newbubble.setVelocity(5.0f, 0.0f, 0.0f);
+	else newbubble.setVelocity(-5.0f, 0.0f, 0.0f);
+
+	return newbubble;
+}
+
 
 //float center[3];
 //float size;

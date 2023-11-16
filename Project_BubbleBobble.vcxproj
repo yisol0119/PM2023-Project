@@ -32,17 +32,21 @@
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\과제\10주차\Week10_lab1_201817583\Constants.h" />
     <ClInclude Include="..\..\과제\10주차\Week10_lab1_201817583\Light.h" />
     <ClInclude Include="..\..\과제\10주차\Week10_lab1_201817583\Material.h" />
     <ClInclude Include="Bubble.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Wall.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bubble_solidgreen.png" />
+    <Image Include="dragon_facingleft.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

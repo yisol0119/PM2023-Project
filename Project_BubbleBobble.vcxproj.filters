@@ -50,9 +50,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\과제\10주차\Week10_lab1_201817583\Constants.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\과제\10주차\Week10_lab1_201817583\Light.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -83,5 +80,16 @@
     <ClInclude Include="Platform.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bubble_solidgreen.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="dragon_facingleft.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>

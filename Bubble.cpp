@@ -3,23 +3,16 @@
 #include <GL/freeglut.h>
 using namespace std;
 
-Bubble::Bubble(float r, int sl, int st) {
+Bubble::Bubble(float r) {
 	setRadius(r);
-	setSlice(sl);
-	setStack(st);
-
-
+	bubble_timer = 0;
+	bubbleState = BLANK;
+	texture_blank.initializeTexture("bubble_blank.png");
+	texture_float.initializeTexture("bubble_solidgreen.png");
+	texture_capture.initializeTexture("enemy_capture.png");
 }
 
-Bubble::Bubble(const Bubble& Bubble) {
-	setRadius(Bubble.getRadius());
-	setSlice(Bubble.getSlice());
-	setStack(Bubble.getStack());
-	setCenter(Bubble.getCenterX(), Bubble.getCenterY(), Bubble.getCenterZ());
-	setVelocity(Bubble.getVelocityX(), Bubble.getVelocityY(), Bubble.getVelocityZ());
-	setMTL(Bubble.getMTL());
-
-}
+Bubble::Bubble(const Bubble& Bubble) = default;
 
 void Bubble::setRadius(float r) {
 
@@ -31,26 +24,26 @@ float Bubble::getRadius() const {
 	return radius;
 
 }
-void Bubble::setSlice(int sl) {
-	slice = sl;
-
-}
-float Bubble::getSlice() const {
-
-	return slice;
-}
-
-
-
-void Bubble::setStack(int st) {
-
-	stack = st;
-}
-float Bubble::getStack() const {
-
-	return stack;
-
-}
+//void Bubble::setSlice(int sl) {
+//	slice = sl;
+//
+//}
+//float Bubble::getSlice() const {
+//
+//	return slice;
+//}
+//
+//
+//
+//void Bubble::setStack(int st) {
+//
+//	stack = st;
+//}
+//float Bubble::getStack() const {
+//
+//	return stack;
+//
+//}
 
 
 void Bubble::setCenter(float x, float y, float z) {
@@ -93,14 +86,27 @@ float Bubble::getVelocityZ() const {
 
 }
 
-void Bubble::setMTL(const Material& m) {
-	mtl = m;
+//void Bubble::setMTL(const Material& m) {
+//	mtl = m;
+//
+//}
+//Material Bubble::getMTL() const {
+//	return mtl;
+//
+//}
 
-}
-Material Bubble::getMTL() const {
-	return mtl;
 
+void Bubble::increaseBubbletimer() {
+	bubble_timer += 0.1f;
 }
+void Bubble::increaseCapturetimer() {
+	capture_timer += 0.1f;
+}
+
+Bubble::BUBBLE_STATE Bubble::getBubblestate() {
+	return bubbleState;
+}
+
 void Bubble::move() {
 	for (int i = 0; i < 3; i++) {
 		center[i] = center[i] + velocity[i];
@@ -108,16 +114,31 @@ void Bubble::move() {
 	}
 
 }
-void Bubble::draw() const {
-	glPushMatrix();
-	glTranslatef(center[0], center[1], center[2]);
+void Bubble::draw() {
 
-	glShadeModel(GL_SMOOTH);
-	glMaterialfv(GL_FRONT, GL_EMISSION, mtl.getEmission());
-	glMaterialfv(GL_FRONT, GL_AMBIENT, mtl.getAmbient());
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mtl.getDiffuse());
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mtl.getSpecular());
-	glMaterialfv(GL_FRONT, GL_SHININESS, mtl.getShininess());
-	glutSolidSphere(radius, slice, stack);
-	glPopMatrix();
+	if (bubbleState == BLANK) {
+	
+		radius = bubble_timer*5+10;
+		if (bubble_timer >= 7.0f) {
+			bubbleState = FLOAT;
+		}
+		texture_blank.drawtexture(radius, radius, center);
+	}
+	else if (bubbleState == FLOAT) {
+		
+		velocity[0] = 0.0f;
+		velocity[1] = 1.0f;
+		texture_float .drawtexture(radius, radius, center);
+	}
+	else if (bubbleState == CAPTURE) {
+		
+		velocity[0] = 0.0f;
+		velocity[1] = 0.8f;
+		texture_capture.drawtexture(50, 50, center);
+	}
+	
+	
+	
+	
+	
 }

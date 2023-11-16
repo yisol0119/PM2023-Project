@@ -1,13 +1,13 @@
 #include "Wall.h"
 
-Wall::Wall(float x, float y, float z, float w, float h, bool impassable) {
+Wall::Wall(float x, float y, float z, float w, float h) {
 
 	center[0] = x;
 	center[1] = y;
 	center[2] = z;
-	this->width = w;
-	this->height = h;
-	this->impassable = impassable;
+	width = w;
+	height = h;
+
 
 
 }
@@ -22,14 +22,7 @@ void Wall::setTexture(const Texture& texture) {
 
 
 }
-float Wall::getleftBoundary() const {
-	return boundary[0];
 
-}
-float Wall::getrightBoundary() const {
-	return boundary[1];
-
-}
 
 void Wall::draw() const {
 	glPushMatrix();
@@ -41,7 +34,7 @@ void Wall::draw() const {
 	//glMaterialfv(GL_FRONT, GL_SPECULAR, mtl.getSpecular());
 	//glMaterialfv(GL_FRONT, GL_SHININESS, mtl.getShininess());
 	glBegin(GL_POLYGON);
-	glColor3f(0.5f, 0.0f, 0.5f);
+	glColor3f(0.5f, 0.0f, 0.0f);
 	glVertex3f(-width / 2, height / 2, 0.0f); // { Front }
 	glVertex3f(width / 2, height / 2, 0.0f); // { Front }
 	glVertex3f(width / 2, -height / 2, 0.0f); // { Front }

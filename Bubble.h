@@ -1,21 +1,23 @@
 #pragma once
 
 
-#include "Material.h"
+#include "Texture.h"
 
 class Bubble
 {
+	friend class Collision;
+	friend class Stage;
 public:
-
-	Bubble(float r, int sl, int st);
+	enum BUBBLE_STATE { BLANK, CAPTURE, FLOAT };
+	Bubble(float r);
 	Bubble(const Bubble& Bubble);
 
 	void setRadius(float r);
 	float getRadius() const;
-	void setSlice(int sl);
-	float getSlice() const;
-	void setStack(int st);
-	float getStack() const;
+	//void setSlice(int sl);
+	//float getSlice() const;
+	//void setStack(int st);
+	//float getStack() const;
 
 	void setCenter(float x, float y, float z);
 	float getCenterX() const;
@@ -28,10 +30,17 @@ public:
 	float getVelocityZ() const;
 
 	void move();
-	void setMTL(const Material& m);
-	Material getMTL() const;
+	/*void setMTL(const Material& m);
+	Material getMTL() const;*/
 
-	void draw() const;
+	BUBBLE_STATE getBubblestate();
+	void increaseBubbletimer();
+	void increaseCapturetimer();
+	void draw();
+
+	~Bubble() = default;
+
+	
 
 private:
 	float radius;
@@ -40,6 +49,10 @@ private:
 
 	float center[3];
 	float velocity[3];
-	Material mtl;
+	float bubble_timer, capture_timer;
+
+	
+	Texture texture_blank, texture_float, texture_capture;
+	BUBBLE_STATE bubbleState;
 };
 
