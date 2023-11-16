@@ -4,7 +4,7 @@
 #include "Constants.h"
 class Enemy
 {
-	friend class Collision; //Collision class¿¡ private º¯¼ö(width, center height)»ç¿ë ±ÇÇÑ ºÎ¿©
+	friend class Collision; //Collision classÂ¿Â¡ private ÂºÂ¯Â¼Ã¶(width, center height)Â»Ã§Â¿Ã« Â±Ã‡Ã‡Ã‘ ÂºÃŽÂ¿Â©
 public:
 	enum FACE { LEFT, RIGHT };
 	enum HORIZONTAL_STATE { HSTOP, MOVE };
