@@ -2,7 +2,7 @@
 #include "Texture.h"
 class Wall
 {
-	friend class Collision; //Collision class¿¡ private º¯¼ö(width, center height)»ç¿ë ±ÇÇÑ ºÎ¿©
+	friend class Collision; //Collision classÂ¿Â¡ private ÂºÂ¯Â¼Ã¶(width, center height)Â»Ã§Â¿Ã« Â±Ã‡Ã‡Ã‘ ÂºÃŽÂ¿Â©
 
 public:
 	Wall(float x, float y, float z, float w, float h);
