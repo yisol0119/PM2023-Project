@@ -113,6 +113,10 @@ void Stage::move() {
 		}
 
 		player.move();
+
+		if (player.getCenter()[0] < -boundaryX || player.getCenter()[0] > boundaryX)  player.center[0] = -player.center[0];
+
+		else if(player.getCenter()[1] > boundaryY || player.getCenter()[1] < -boundaryY) player.center[1] = -player.center[1];
 	}
 
 }

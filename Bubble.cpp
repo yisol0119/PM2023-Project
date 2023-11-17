@@ -122,19 +122,19 @@ void Bubble::draw() {
 		if (bubble_timer >= 7.0f) {
 			bubbleState = FLOAT;
 		}
-		texture_blank.drawtexture(radius, radius, center);
+		texture_blank.drawtexture(radius, radius, center, 0);
 	}
 	else if (bubbleState == FLOAT) {
 		
 		velocity[0] = 0.0f;
 		velocity[1] = 1.0f;
-		texture_float .drawtexture(radius, radius, center);
+		texture_float .drawtexture(radius, radius, center,0);
 	}
 	else if (bubbleState == CAPTURE) {
 		
 		velocity[0] = 0.0f;
 		velocity[1] = 0.8f;
-		texture_capture.drawtexture(50, 50, center);
+		texture_capture.drawtexture(50, 50, center,0);
 	}
 	
 	

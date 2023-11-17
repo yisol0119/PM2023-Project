@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "Constants.h"
 using namespace std;
 
 
@@ -37,8 +38,8 @@ FIBITMAP* Texture::createBitMap(char const* filename) {
 void Texture::generateTexture() {
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight,
@@ -60,7 +61,7 @@ GLuint Texture::getTextureID() const {
 }
 
 
-void Texture::drawtexture(int width, int height, float* center, bool reverse) {
+void Texture::drawtexture(float width, float height, float* center, bool reverse) {
 	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -86,7 +87,8 @@ void Texture::drawtexture(int width, int height, float* center, bool reverse) {
 }
 
 
-void Texture::drawtexture(int width, int height, float* center) {
+void Texture::drawtexture(float width, float height, float* center) {
+	static float texcoord;
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -95,10 +97,11 @@ void Texture::drawtexture(int width, int height, float* center) {
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	glBegin(GL_QUADS);
 	
-		glTexCoord2f(0.0f, 0.0f); glVertex2f(center[0] - width / 2, center[1] - height / 2);
-		glTexCoord2f(0.0f, 1.0f); glVertex2f(center[0] - width / 2, center[1] + height / 2);
-		glTexCoord2f(1.0f, 1.0f); glVertex2f(center[0] + width / 2, center[1] + height / 2);
-		glTexCoord2f(1.0f, 0.0f); glVertex2f(center[0] + width / 2, center[1] - height / 2);
+
+	glTexCoord2f(0.0f, 0.0f); glVertex2f(center[0] - width / 2, center[1] - height / 2);
+	glTexCoord2f(0.0f, height/PLAYER_SIZE); glVertex2f(center[0] - width / 2, center[1] + height / 2);
+	glTexCoord2f(width / PLAYER_SIZE, height / PLAYER_SIZE); glVertex2f(center[0] + width / 2, center[1] + height / 2);
+	glTexCoord2f(width / PLAYER_SIZE, 0); glVertex2f(center[0] + width / 2, center[1] - height / 2);
 
 	glEnd();
 	glDisable(GL_TEXTURE_2D);

@@ -27,7 +27,7 @@ void Enemy::draw() {
 	if (face == LEFT)
 		texture.drawtexture(size, size, center,1);
 	else
-		texture.drawtexture(size, size, center);
+		texture.drawtexture(size, size, center ,0);
 }
 
 void Enemy::setFace(FACE f) {

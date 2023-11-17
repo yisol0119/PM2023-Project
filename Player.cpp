@@ -28,7 +28,7 @@ Player::Player(float x, float y, float z, float s) {
 void Player::draw() {
 	if (shield == TRUE && ((int)shield_timer % 2) == 0) return;    //shield가 활성화 되었을 때 player의 형상이 깜박거리도록 한다. 
 	if(face==LEFT)
-		texture.drawtexture(size, size, center);
+		texture.drawtexture(size, size, center,0 );
 	else
 		texture.drawtexture(size, size, center,1);
 }
@@ -71,7 +71,7 @@ void Player::setVerticalState(VERTICAL_STATE vs) {
 		velocity[1] = 0.0f;
 		break;
 	case Player::JUMP:
-		velocity[1]=10.0f;
+		velocity[1]=12.0f;
 		break;
 	case Player::FALL:
 		velocity[1] = -3.0f;

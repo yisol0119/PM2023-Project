@@ -9,6 +9,9 @@ using namespace std;
 void Collision::collide(Stage& stage) {
 	static bool player_bubble;
 	static bool enemy_bubble;
+
+
+
 	//player-bubble 
 	for (auto itr = stage.bubbles.begin(); itr != stage.bubbles.end();) {
 		player_bubble = handleCollision(stage.player, *itr); 
@@ -38,7 +41,8 @@ void Collision::collide(Stage& stage) {
 		handleCollision(stage.player, stage.enemies[i]);
 
 	}
-	//
+	// player과 platform 사이의 충돌을 체크 
+	static bool player_colliding;
 	for (int i = 0; i < stage.getPlatformsize(); i++)
 		handleCollision(stage.player, stage.stageplatform[i]);
 	//
@@ -47,7 +51,7 @@ void Collision::collide(Stage& stage) {
 	//
 	for (int i = 0; i < stage.getBubblesize(); i++) {
 		for (auto itr = stage.enemies.begin(); itr != stage.enemies.end();) {
-			enemy_bubble= handleCollision(*itr, stage.bubbles[i]); //오류 생길수 있음 
+			enemy_bubble= handleCollision(*itr, stage.bubbles[i]);
 			if (enemy_bubble == TRUE) {
 				stage.capturebubble_count++;
 				itr= stage.enemies.erase(itr);
